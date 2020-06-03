@@ -1,33 +1,19 @@
-const axios = require('axios').default;
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
+const weather = require('./utils/WeatherFromCoordinate')
 
-const url = 'http://api.weatherstack.com/current?access_key=7c4fcd9e21cade1bea8c6e42779f80ab&query=Paris'
 
-const api = 'pk.eyJ1IjoicG9tbWVwb21tZSIsImEiOiJja2F4eXNtMmkwYjNmMndxcWVpa3hiaXZkIn0.CMFy5-5BH2iNnE1d-1Q-dg'
-
-const mapBoxURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Paris.json?access_token=' + api
-
-axios.get(url)
-  .then(function (response) {
-    const temperature = response.data.current.temperature
-    const precipitation = response.data.current.precip
-    console.log('It is currently ' + temperature + ' degrees out. There is a ' + precipitation + '% chance of rain')
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  });
-
-axios.get(mapBoxURL)
-.then(function (response) {
-  if(response.data.features.length === 0){
-    console.log('on ne trouve pas cette localisation')
-  }else{
-    console.log('latitude ' + response.data.features[0].center[0])
-    console.log('longitude ' + response.data.features[0].center[1])
-  }
-
+geocode('Paris', (error, success) => {
+    console.log('Error: ' + error )
+    console.log('Success1: ' + JSON.stringify(success))
 })
-.catch(function (error) {
-  // handle error
-  console.log(error);
-});
+
+weather(-73.989, 40.733, (error, success) => {
+    console.log('Error: ' + error )
+    console.log('Success2: ' + JSON.stringify(success))
+})
+
+forecast(-73.989, 40.733, (error, success) => {
+    console.log('Error: ' + error )
+    console.log('Success3: ' + JSON.stringify(success))
+})

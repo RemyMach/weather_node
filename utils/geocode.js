@@ -14,11 +14,10 @@ const geocode = (adress, callback) => {
                     location: response.data.features[0].place_name
                 })
             }
-
             })
         .catch((error) => {
             // handle error
-            callback('le service Geocode est actuellement inaccessible', undefined);
+            callback('le service geocode n\'est pas disponible', undefined);
         });
 }
 
